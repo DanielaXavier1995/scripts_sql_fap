@@ -1,0 +1,67 @@
+CREATE SCHEMA loja;
+
+USE loja;
+
+CREATE TABLE funcionario
+(
+p_nome VARCHAR(15) NOT NULL,
+m_nome CHAR(15) NOT NULL,
+u_nome VARCHAR(30) NOT NULL,
+cpf CHAR(11) NOT NULL,
+data_nasc DATE,
+endereço VARCHAR(30),
+sexo CHAR,
+salario DECIMAL (10,2),
+cpf_supervisor CHAR(11) NOT NULL,
+dnr int,
+PRIMARY KEY (cpf),
+FOREIGN KEY (cpf_supervisor) REFERENCES funcionario(cpf)
+);
+
+CREATE TABLE departamento 
+(
+d_nome VARCHAR(15) NOT NULL,
+d_numero INT(15) NOT NULL,
+cpf_gerente CHAR(11) NOT NULL,
+PRIMARY KEY (d_numero),
+UNIQUE (d_nome),
+FOREIGN KEY (cpf_gerente) REFERENCES funcionario(cpf) 
+);
+
+CREATE TABLE localizacao_dep 
+(
+d_numero INT NOT NULL, 
+d_local VARCHAR(15) NOT NULL,
+PRIMARY KEY (d_numero, d_local),
+FOREIGN KEY (d_numero) REFERENCES departamento (d_numero)
+);
+
+CREATE TABLE projeto 
+(
+proj_nome VARCHAR(15) NOT NULL,
+proj_numero INT NOT NULL,
+proj_local VARCHAR(15),
+d_numero INT NOT NULL,
+PRIMARY KEY (proj_nome),
+FOREIGN KEY (d_numero) REFERENCES departamento(d_numero)
+);
+
+CREATE TABLE trabalha_em 
+(
+f_cpf CHAR(9) NOT NULL,
+prn INT NOT NULL,
+horas DECIMAL(3,1) NOT NULL,
+PRIMARY KEY (f_cpf, prn),
+FOREIGN KEY (f_cpf) REFERENCES funcionario(cpf)
+);
+
+CREATE TABLE dependente 
+(
+f_cpf CHAR(9) NOT NULL,
+nome_dependente VARCHAR(15) NOT NULL,
+sexo CHAR,
+data_nasc DATE,
+parentesco VARCHAR(8),
+PRIMARY KEY (f_cpf, nome_dependente),
+FOREIGN KEY (f_cpf) REFERENCES funcionario(cpf)
+);
