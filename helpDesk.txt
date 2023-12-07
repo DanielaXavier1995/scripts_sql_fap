@@ -1,0 +1,38 @@
+CREATE SCHEMA helpdesk_fap;
+
+use helpdesk_fap;
+
+CREATE TABLE customer (
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+name_customer VARCHAR(50) NOT NULL,
+email_address VARCHAR(30) NOT NULL,
+phone_number VARCHAR(14) NOT NULL,
+address VARCHAR(70) NOT NULL
+);
+
+CREATE TABLE user_customer (
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+login VARCHAR(30) NOT NULL,
+senha VARCHAR(8) NOT NULL
+);
+
+CREATE TABLE user_employee (
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+login VARCHAR(30) NOT NULL,
+senha VARCHAR(8) NOT NULL
+);
+
+CREATE TABLE employee (
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+name_employee VARCHAR(50) NOT NULL,
+registration_number VARCHAR(11) NOT NULL,
+phone_number VARCHAR(14) NOT NULL
+);
+
+CREATE TABLE called (
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+description_called VARCHAR(300) NOT NULL,
+opening_date DATE,
+status_called ENUM('Open','Progress','Closed'),
+is_active BOOLEAN
+);
