@@ -16,11 +16,11 @@ login VARCHAR(30) NOT NULL,
 senha VARCHAR(8) NOT NULL
 );
 
-ALTER TABLE customer
-ADD id_user INT NOT NULL,
-ADD CONSTRAINT id_user
+ALTER TABLE user_customer
+ADD id_user_customer INT NOT NULL,
+ADD CONSTRAINT id_user_customer
 FOREIGN KEY (id)
-REFERENCES user_customer (id);
+REFERENCES customer (id);
 
 CREATE TABLE user_employee (
 id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -35,11 +35,11 @@ registration_number VARCHAR(11) NOT NULL,
 phone_number VARCHAR(14) NOT NULL
 );
 
-ALTER TABLE employee
+ALTER TABLE user_employee
 ADD id_user_employee INT NOT NULL,
 ADD CONSTRAINT id_user_employee
 FOREIGN KEY (id)
-REFERENCES user_employee (id);
+REFERENCES employee (id);
 
 CREATE TABLE called (
 id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
