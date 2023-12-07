@@ -16,6 +16,12 @@ login VARCHAR(30) NOT NULL,
 senha VARCHAR(8) NOT NULL
 );
 
+ALTER TABLE customer
+ADD id_user INT NOT NULL,
+ADD CONSTRAINT id_user
+FOREIGN KEY (id)
+REFERENCES user_customer (id);
+
 CREATE TABLE user_employee (
 id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 login VARCHAR(30) NOT NULL,
@@ -29,6 +35,12 @@ registration_number VARCHAR(11) NOT NULL,
 phone_number VARCHAR(14) NOT NULL
 );
 
+ALTER TABLE employee
+ADD id_user_employee INT NOT NULL,
+ADD CONSTRAINT id_user_employee
+FOREIGN KEY (id)
+REFERENCES user_employee (id);
+
 CREATE TABLE called (
 id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 description_called VARCHAR(300) NOT NULL,
@@ -36,3 +48,17 @@ opening_date DATE,
 status_called ENUM('Open','Progress','Closed'),
 is_active BOOLEAN
 );
+
+ALTER TABLE called
+ADD CONSTRAINT id_employee
+FOREIGN KEY (id)
+REFERENCES employee (id);
+
+ALTER TABLE called
+ADD CONSTRAINT id_customer
+FOREIGN KEY (id)
+REFERENCES customer (id);
+
+ALTER TABLE called
+ADD id_customer INT NOT NULL,
+ADD id_employee INT NOT NULL;
