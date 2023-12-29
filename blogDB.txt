@@ -1,0 +1,28 @@
+CREATE SCHEMA BlogDB;
+
+use BlogDB;
+
+CREATE TABLE autor(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+nome_autor VARCHAR(50) NOT NULL,
+email VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE post (
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+autor_id INT,
+titulo VARCHAR(100) NOT NULL,
+conteudo VARCHAR(500) NOT NULL,
+data_publicacao VARCHAR(11) NOT NULL,
+FOREIGN KEY (autor_id) REFERENCES autor(id)
+);
+
+CREATE TABLE comentario (
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+autor_id INT,
+post_id INT,
+texto_comentario VARCHAR(1000) NOT NULL,
+data_comentario DATE NOT NULL,
+FOREIGN KEY (autor_id) REFERENCES autor(id),
+FOREIGN KEY (post_id) REFERENCES post(id)
+);
