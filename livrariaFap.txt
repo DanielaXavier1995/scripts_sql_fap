@@ -1,0 +1,99 @@
+CREATE SCHEMA livraria_fap;
+
+USE livraria_fap;
+
+CREATE TABLE autor(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+nome VARCHAR(60) NOT NULL,
+nacionalidade VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE livros(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+id_autor INT,
+titulo VARCHAR(255) NOT NULL,
+ano_publicacao DATE NOT NULL,
+FOREIGN KEY (id_autor) REFERENCES autor(id)
+);
+
+ALTER TABLE livros
+CHANGE COLUMN ano_publicacao ano_publicacao VARCHAR(10);
+
+SELECT * FROM livros;
+
+-- 1) Inserção de dados: --
+
+-- Autores --
+
+INSERT INTO autor (nome, nacionalidade) VALUES ('Machado de Assis', 'Brasileiro');
+INSERT INTO autor (nome, nacionalidade) VALUES ('Ariano Suassuna', 'Brasileiro');
+INSERT INTO autor (nome, nacionalidade) VALUES ('John Green', 'EUA');
+INSERT INTO autor (nome, nacionalidade) VALUES ('Clarice Lispector', 'Brasileira');
+INSERT INTO autor (nome, nacionalidade) VALUES ('Jane Austen', 'Britânica');
+
+SELECT * FROM autor;
+
+-- livros --
+INSERT INTO livros (id_autor, titulo , ano_publicacao) VALUES (1, 'Dom Casmuro', '1899');
+INSERT INTO livros (id_autor, titulo , ano_publicacao) VALUES (1, 'Memórias Póstumas de Brás Cubas', '1881');
+INSERT INTO livros (id_autor, titulo , ano_publicacao) VALUES (1, 'Quincas Borba', '1891');
+INSERT INTO livros (id_autor, titulo , ano_publicacao) VALUES (1, 'O Alienista', '1882');
+INSERT INTO livros (id_autor, titulo , ano_publicacao) VALUES (1, 'A Cartomante', '1884');
+
+INSERT INTO livros (id_autor, titulo , ano_publicacao) VALUES (2, 'A pena e a lei', '1971');
+INSERT INTO livros (id_autor, titulo , ano_publicacao) VALUES (2, 'Auto da compadecida', '1955');
+INSERT INTO livros (id_autor, titulo , ano_publicacao) VALUES (2, 'O casamento suspeito', '1961');
+INSERT INTO livros (id_autor, titulo , ano_publicacao) VALUES (2, 'Os homens de barro', '2011');
+INSERT INTO livros (id_autor, titulo , ano_publicacao) VALUES (2, 'Uma mulher vestida de sol', '1964');
+
+INSERT INTO livros (id_autor, titulo , ano_publicacao) VALUES (3, 'Aculpa é das estreslas', '2012');
+INSERT INTO livros (id_autor, titulo , ano_publicacao) VALUES (3, 'Cidades de papel', '2005');
+INSERT INTO livros (id_autor, titulo , ano_publicacao) VALUES (3, 'Deixa a neve cair', '2008');
+INSERT INTO livros (id_autor, titulo , ano_publicacao) VALUES (3, 'A procura de Alaska', '2011');
+INSERT INTO livros (id_autor, titulo , ano_publicacao) VALUES (3, 'Quem é voce Alasca?', '2008');
+
+-- 2) Consulta simples: --
+SELECT * FROM autor;
+SELECT * FROM livros;
+
+-- 3) Consulta com junção INNER JOIN: --
+SELECT
+livros.titulo,
+livros.ano_publicacao AS ano,
+autor.nome AS nome_autor
+FROM livros
+INNER JOIN autor ON livros.id_autor = autor.id;
+
+-- 4) Consulta com junção LEFT JOIN: --
+SELECT
+livros.titulo,
+livros.ano_publicacao AS ano,
+autor.nome AS nome_autor,
+autor.id
+FROM autor
+LEFT JOIN livros ON livros.id_autor = autor.id;
+
+-- 5) Consulta com filtro por nacionalidade: --
+SELECT
+livros.titulo,
+livros.ano_publicacao AS ano,
+autor.nome AS nome_autor,
+autor.nacionalidade
+FROM autor
+INNER JOIN livros ON livros.id_autor = autor.id
+WHERE nacionalidade = 'EUA';
+
+-- 6) Consulta agregada: --
+SELECT
+autor.nome AS nome_autor,
+COUNT(livros.id) AS quantidade
+FROM livros
+INNER JOIN autor ON livros.id_autor = autor.id
+GROUP BY autor.nome;
+
+SELECT
+autor.nome AS nome_autor,
+COUNT(livros.id) AS quantidade
+FROM autor
+LEFT JOIN livros ON livros.id_autor = autor.id
+GROUP BY autor.nome;
