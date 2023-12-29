@@ -1,0 +1,103 @@
+-- Criar Banco --
+CREATE SCHEMA TechData;
+
+USE TechData;
+
+-- Criar tabela --
+CREATE TABLE transacao(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+nome_produto VARCHAR(60) NOT NULL,
+categoria_produto VARCHAR(60) NOT NULL,
+nome_transacao VARCHAR(60) NOT NULL,
+valor_transacao DOUBLE NOT NULL,
+data_transacao DATE NOT NULL
+);
+
+-- Demostração de inserção de dados --
+INSERT INTO transacao (nome_produto, categoria_produto, nome_transacao, valor_transacao, data_transacao) 
+VALUES ('TV','eletro', 'venda', 3500.00, current_date());
+INSERT INTO transacao (nome_produto, categoria_produto, nome_transacao, valor_transacao, data_transacao) 
+VALUES ('Smartfone','eletro', 'venda', 5500.00, current_date());
+INSERT INTO transacao (nome_produto, categoria_produto, nome_transacao, valor_transacao, data_transacao) 
+VALUES ('Camiseta','vestuário', 'venda', 59.90, current_date());
+INSERT INTO transacao (nome_produto, categoria_produto, nome_transacao, valor_transacao, data_transacao) 
+VALUES ('Short','vestuário', 'venda', 99.90, current_date());
+INSERT INTO transacao (nome_produto, categoria_produto, nome_transacao, valor_transacao, data_transacao) 
+VALUES ('Vestido','vestuário', 'venda', 139.90, current_date());
+INSERT INTO transacao (nome_produto, categoria_produto, nome_transacao, valor_transacao, data_transacao) 
+VALUES ('Sofá','moveis', 'venda', 1739.90, '2023-12-23');
+INSERT INTO transacao (nome_produto, categoria_produto, nome_transacao, valor_transacao, data_transacao) 
+VALUES ('Mesa','moveis', 'venda', 2599.90, '2023-12-23');
+INSERT INTO transacao (nome_produto, categoria_produto, nome_transacao, valor_transacao, data_transacao) 
+VALUES ('Short','vestuário', 'venda', 99.90, '2023-12-21');
+INSERT INTO transacao (nome_produto, categoria_produto, nome_transacao, valor_transacao, data_transacao) 
+VALUES ('Smartfone','eletro', 'venda', 5500.00, '2023-12-11');
+INSERT INTO transacao (nome_produto, categoria_produto, nome_transacao, valor_transacao, data_transacao) 
+VALUES ('Camiseta','vestuário', 'venda', 59.90, '2023-12-10');
+INSERT INTO transacao (nome_produto, categoria_produto, nome_transacao, valor_transacao, data_transacao) 
+VALUES ('sandália','vestuário', 'venda', 39.90, '2023-12-18');
+
+-- 1) Seleção de dados  --
+SELECT * FROM transacao;
+
+-- 2) Renomeando colunas:  --
+SELECT 
+id AS id_transacao, 
+nome_produto AS nome, 
+categoria_produto AS categoria,
+nome_transacao,
+valor_transacao AS valor,
+data_transacao AS data
+FROM transacao;
+
+-- 3) Filtragem com a cláusula WHERE:  --
+SELECT 
+id AS id_transacao, 
+nome_produto AS nome, 
+categoria_produto AS categoria,
+nome_transacao,
+valor_transacao AS valor,
+data_transacao AS data
+FROM transacao
+WHERE valor_transacao > 100.0;
+
+-- 4) Ordenação com a cláusula ORDER BY:  --
+SELECT * FROM transacao ORDER BY valor_transacao DESC;
+
+-- 5) Agregação com funções SQL:   --
+
+-- AVG --
+SELECT
+AVG (valor_transacao) AS valor
+FROM transacao;
+
+-- MAX --
+SELECT
+MAX(valor_transacao) AS valor
+FROM transacao;
+
+-- MIN --
+SELECT
+MIN(valor_transacao) AS valor
+FROM transacao;
+
+-- COUNT --
+SELECT
+COUNT(id) 
+FROM transacao;
+
+-- 6) Agrupamento com a cláusula GROUP BY:  --
+SELECT
+nome_produto AS nome,
+AVG(valor_transacao) AS media
+FROM transacao
+GROUP BY nome_produto;
+
+-- 7) Consulta combinada:  --
+SELECT
+categoria_produto AS categoria,
+COUNT(id) AS quantidade,
+SUM(valor_transacao) AS valor_total,
+AVG(valor_transacao) AS media
+FROM transacao
+GROUP BY categoria_produto;
