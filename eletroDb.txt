@@ -1,0 +1,23 @@
+CREATE SCHEMA eletroDB;
+
+USE eletroDB;
+
+CREATE TABLE produto(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+nome_produto VARCHAR(60) NOT NULL,
+preco DOUBLE NOT NULL,
+quantidade_estoque INT NOT NULL
+);
+
+-- Demostração de inserção de produtos --
+INSERT INTO produto (nome_produto, preco, quantidade_estoque) VALUES ('Smartphone', 799.99, 20);
+INSERT INTO produto (nome_produto, preco, quantidade_estoque) VALUES ('Tablet', 349.99, 10);
+INSERT INTO produto (nome_produto, preco, quantidade_estoque) VALUES ('Fone de ouvido', 49.99, 50);
+
+SELECT * FROM produto;
+
+-- Demostração de atualização de produtos --
+UPDATE produto SET preco = 849.99, quantidade_estoque = 25  WHERE id = 1;
+
+-- Demostração de deleção de produtos --
+DELETE FROM produto WHERE id = 2;
